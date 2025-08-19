@@ -1,0 +1,108 @@
+{
+  "info": {
+    "name": "ZADDY API",
+    "_postman_id": "zaddy-collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{base}}/health"
+      }
+    },
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base}}/auth/register",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\":\"Demo\",\n  \"email\":\"demo@example.com\",\n  \"password\":\"Pass@123\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base}}/auth/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\":\"demo@example.com\",\n  \"password\":\"Pass@123\"\n}"
+        }
+      }
+    },
+    {
+      "name": "List Packages",
+      "request": {
+        "method": "GET",
+        "url": "{{base}}/packages"
+      }
+    },
+    {
+      "name": "Create Package (admin)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base}}/packages",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"code\":\"ALPHA\",\"name\":\"Alpha Package\",\"priceINR\":3999,\"billingCycle\":\"monthly\",\"features\":[\"Basic Courses\",\"Community Access\"]\n}"
+        }
+      }
+    },
+    {
+      "name": "Create Order (auth)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base}}/orders",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"packageCode\":\"BETA\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Verify Payment (auth)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base}}/orders/verify",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"orderId\":\"REPLACE\",\n  \"razorpay_payment_id\":\"pay_...\",\n  \"razorpay_order_id\":\"order_...\",\n  \"razorpay_signature\":\"...\"\n}"
+        }
+      }
+    }
+  ]
+}

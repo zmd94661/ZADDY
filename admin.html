@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin — ZADDY</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100">
+  <div class="min-h-screen grid md:grid-cols-[260px_1fr]">
+    <!-- Sidebar -->
+    <aside class="bg-white shadow md:h-screen p-6">
+      <h1 class="text-2xl font-extrabold mb-6 text-blue-700">ZADDY Admin</h1>
+      <nav class="space-y-2">
+        <a href="#dashboard" class="block px-3 py-2 rounded hover:bg-gray-100">Dashboard</a>
+        <a href="#orders" class="block px-3 py-2 rounded hover:bg-gray-100">Orders</a>
+        <a href="#subscriptions" class="block px-3 py-2 rounded hover:bg-gray-100">Subscriptions</a>
+        <a href="#users" class="block px-3 py-2 rounded hover:bg-gray-100">Users</a>
+        <a href="#courses" class="block px-3 py-2 rounded hover:bg-gray-100">Courses</a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="p-6 space-y-8">
+      <section id="dashboard">
+        <h2 class="text-xl font-extrabold mb-4">Analytics</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-white p-4 rounded-xl shadow">
+            <div class="text-sm text-gray-500">Monthly Revenue</div>
+            <div class="text-2xl font-bold">₹3,20,000</div>
+          </div>
+          <div class="bg-white p-4 rounded-xl shadow">
+            <div class="text-sm text-gray-500">Active Users</div>
+            <div class="text-2xl font-bold">1,284</div>
+          </div>
+          <div class="bg-white p-4 rounded-xl shadow">
+            <div class="text-sm text-gray-500">Orders (Success Rate)</div>
+            <div class="text-2xl font-bold">92%</div>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow mt-6">
+          <canvas id="salesChart" height="120"></canvas>
+        </div>
+      </section>
+
+      <section id="orders" class="bg-white p-4 rounded-xl shadow">
+        <h3 class="text-lg font-bold mb-3">Latest Orders</h3>
+        <div class="overflow-auto">
+          <table class="w-full text-sm">
+            <thead><tr class="text-left border-b"><th class="py-2">Order ID</th><th>Customer</th><th>Amount</th><th>Status</th></tr></thead>
+            <tbody id="ordersBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="subscriptions" class="bg-white p-4 rounded-xl shadow">
+        <h3 class="text-lg font-bold mb-3">Subscriptions</h3>
+        <div class="overflow-auto">
+          <table class="w-full text-sm">
+            <thead><tr class="text-left border-b"><th class="py-2">User</th><th>Package</th><th>Start</th><th>End</th><th>Status</th></tr></thead>
+            <tbody id="subsBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Demo data
+    const orders = [
+      { id: 'ORD_1001', user: 'Aman Gupta', amount: 7999, status: 'Success' },
+      { id: 'ORD_1002', user: 'Priya Shah', amount: 14999, status: 'Pending' },
+      { id: 'ORD_1003', user: 'Vikram Rao', amount: 3999, status: 'Failed' },
+    ];
+    const subs = [
+      { user: 'Aman Gupta', pkg: 'BETA', start: '2025-07-01', end: '2025-08-01', status: 'active' },
+      { user: 'Priya Shah', pkg: 'GAMMA', start: '2025-07-12', end: '2025-08-12', status: 'pending' },
+      { user: 'Vikram Rao', pkg: 'ALPHA', start: '2025-06-20', end: '2025-07-20', status: 'expired' },
+    ];
+
+    // Render orders
+    const ordersBody = document.getElementById('ordersBody');
+    orders.forEach(o => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = \`<td class="py-2">\${o.id}</td><td>\${o.user}</td><td>₹\${o.amount}</td><td>\${o.status}</td>\`;
+      ordersBody.appendChild(tr);
+    });
+
+    // Render subs
+    const subsBody = document.getElementById('subsBody');
+    subs.forEach(s => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = \`<td class="py-2">\${s.user}</td><td>\${s.pkg}</td><td>\${s.start}</td><td>\${s.end}</td><td>\${s.status}</td>\`;
+      subsBody.appendChild(tr);
+    });
+
+    // Chart.js
+    const ctx = document.getElementById('salesChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Alpha', 'Beta', 'Gamma', 'Omega'],
+        datasets: [{ label: 'Sales (₹)', data: [120000, 190000, 260000, 310000] }]
+      },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
+  </script>
+</body>
+</html>
